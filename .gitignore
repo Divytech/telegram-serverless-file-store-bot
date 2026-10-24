@@ -1,0 +1,3 @@
+.tgcloud/
+node_modules/
+.env

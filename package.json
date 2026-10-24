@@ -1,0 +1,15 @@
+{
+  "name": "telegram-file-store-bot",
+  "version": "1.0.0",
+  "description": "Serverless Telegram File Store Bot with DB Channel, Force Subscribe, Auto-Delete, and Shortener Monetization",
+  "main": "tgcloud/handlers/message.js",
+  "devDependencies": {
+    "@tgcloud/cli": "^0.2.0"
+  },
+  "scripts": {
+    "deploy": "tgcloud push",
+    "migrate": "tgcloud migrate",
+    "status": "tgcloud status"
+  },
+  "license": "MIT"
+}

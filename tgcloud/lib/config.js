@@ -1,0 +1,12 @@
+export const OWNER_ID = 0;
+export const ADMIN_IDS = [0];
+export const DB_CHANNEL_ID = 0;
+export const LOG_CHANNEL_ID = 0;
+export const FSUB_CHANNELS = [];
+export const PROTECT_CONTENT = false;
+export const AUTO_DELETE_SECONDS = 600;
+export const PROMO_BUTTON = null;
+export const SHORTENER_API_KEY = '';
+export const SHORTENER_API_URL = 'https://droplink.co/api';
+export const VERIFY_EXPIRE_HOURS = 24;
+export const CUSTOM_CAPTION = '{filename} [{filesize}]';
