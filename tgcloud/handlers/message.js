@@ -297,6 +297,29 @@ export default async function (message) {
       }
     }
 
+    if (message.text === '/help' || message.text?.startsWith('/help')) {
+      const helpText = `📖 <b>Bot Features & User Guide</b>\n\n` +
+        `Welcome to <b>File Store Bot</b>! Here is a guide to all available features:\n\n` +
+        `📁 <b>1. Store Files & Generate Links</b>\n` +
+        `• Send or forward any document, video, audio, or photo here.\n` +
+        `• The bot stores it safely and returns a permanent shareable link.\n\n` +
+        `📦 <b>2. Batch Sharing</b>\n` +
+        `• Share a range of files in a single link!\n` +
+        `• Command: <code>/batch &lt;first_id&gt; &lt;last_id&gt;</code>\n` +
+        `• Example: <code>/batch 10 25</code>\n\n` +
+        `📢 <b>3. Channel Subscription</b>\n` +
+        `• Users must subscribe to our channel before downloading files.\n\n` +
+        `⏳ <b>4. Copyright Protection & Auto-Delete</b>\n` +
+        `• Delivered files automatically self-destruct after delivery to protect against DMCA strikes.`;
+
+      await api.sendMessage({
+        chat_id: chatId,
+        text: helpText,
+        parse_mode: 'HTML',
+      });
+      return;
+    }
+
     if (message.text?.startsWith('/batch')) {
       const globalCheck = await checkAllFSubs(userId);
       if (!globalCheck.ok) {
@@ -598,10 +621,12 @@ export default async function (message) {
         return;
       }
 
+      const userName = message.from?.first_name || (message.from?.username ? `@${message.from.username}` : 'there');
+      const defaultStart = `👋 <b>Hello ${userName}!</b>\n\nSend any file to generate its permanent link.\n\n📖 For more info, send /help`;
       const custom = await db.select({ value: settings.value }).from(settings).where(eq(settings.key, 'start_message')).get();
       await api.sendMessage({
         chat_id: chatId,
-        text: custom?.value ?? '👋 <b>Welcome!</b>\n\nClick on any file link to download files directly through this bot.\n\nSend files to store them and get shareable links.',
+        text: custom?.value ? custom.value.replace(/{name}/gi, userName).replace(/{username}/gi, message.from?.username ? `@${message.from.username}` : userName) : defaultStart,
         parse_mode: 'HTML',
       });
       return;
